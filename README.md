@@ -1,37 +1,9 @@
-## Welcome to GitHub Pages
+## Introduction
+Most computers cannot accurately measure highly time-sensitive events due to its inherent latency. We built a way to calculate this latency, enabling regular PCs to be used for sensitive research. In particular, the Psychomotor Vigilance Test, which test a person's reaction time, requires an accuracy of measurement down to a few microseconds using a computer screen and keyboard for stimulation and response respectively.
 
-You can use the [editor on GitHub](https://github.com/Chris-Fu/ESE350-Group2-FinalProject/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## System Architecture
+The test computer displays a stimulus which triggers a light sensor to directly activate a solenoid to press the spacebar. A force sensor is adhered to the spacebar such that it is triggered when the solenoid begins to depress the spacebar. An Mbed is used to measure each time at which the light sensor and force sensor is activated, and saves that information. After many trials to find a data distribution, the difference between what the computer records as the stimulus and response time and what the Mbed records as the stimulus and response time are used as the display and keyboard latency respectively.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Chris-Fu/ESE350-Group2-FinalProject/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Code
+Our code employs two parts: a C++ code section to run the Mbed as well as Python code to communicate with the Mbed and extract the necessary information to calculate the final latencies. Our code is designed that the Mbed can accept a specific group of commands, so one can easily edit the Python code to suit whatever arrangement of calculations they needed.
+The first part of our code is a battery of clock calculations. We use PTP protocol along some clock ratio calibration to set our Mbed clock to be the same as our calibration computer. The next step is we run Cognition on the calibration computer and use our Mbed to log timestamps to accurately separate the delays within the computer's total latency.
